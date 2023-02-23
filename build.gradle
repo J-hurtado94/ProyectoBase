@@ -1,11 +1,11 @@
 plugins {
-    id "net.serenity-bdd.serenity-gradle-plugin" version "3.5.1"
+    id "net.serenity-bdd.serenity-gradle-plugin" version "3.5.0"
     id 'java'
     id 'eclipse'
     id 'idea'
 }
 
-defaultTasks 'clean','test','aggregate'
+defaultTasks 'clean', 'test', 'aggregate'
 
 repositories {
     mavenCentral()
@@ -23,20 +23,20 @@ ext {
 }
 
 dependencies {
-    testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
-                "net.serenity-bdd:serenity-cucumber:${serenityCoreVersion}",
-                "org.junit.jupiter:junit-jupiter-api:${junitVersion}",
-                "org.assertj:assertj-core:${assertJVersion}",
-                "ch.qos.logback:logback-classic:${logbackVersion}"
+    implementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-cucumber:${serenityCoreVersion}",
+            "org.junit.jupiter:junit-jupiter-api:${junitVersion}",
+            "org.assertj:assertj-core:${assertJVersion}",
+            "ch.qos.logback:logback-classic:${logbackVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 test {
-    useJUnitPlatform()
+    useJUnit()
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
 }

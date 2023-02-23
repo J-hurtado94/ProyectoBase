@@ -1,36 +1,43 @@
 package starter.stepdefinitions;
 
-import io.cucumber.java.Before;
-import io.cucumber.java.ParameterType;
+import co.com.demoblaze.questions.TotalValue;
+import co.com.demoblaze.tasks.AddProducts;
+import co.com.demoblaze.tasks.NavigateTo;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.actors.OnStage;
-import net.serenitybdd.screenplay.actors.OnlineCast;
-import net.serenitybdd.screenplay.ensure.Ensure;
-import starter.navigation.NavigateTo;
-import starter.search.LookForInformation;
-import starter.search.WikipediaArticle;
+
+import java.util.List;
+
+import static co.com.demoblaze.tasks.AddProducts.goToTheShoppingCart;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
+import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+import static org.hamcrest.Matchers.equalTo;
 
 public class SearchStepDefinitions {
 
-    @Given("{actor} is researching things on the internet")
-    public void researchingThings(Actor actor) {
-        actor.wasAbleTo(NavigateTo.theWikipediaHomePage());
+    @Given("the user enter to the demoblaze page")
+    public void the_user_enter_to_the_demoblaze_page() {
+        theActorCalled("User").wasAbleTo(NavigateTo.theDemoBlazePage());
     }
 
-    @When("{actor} looks up {string}")
-    public void searchesFor(Actor actor, String term) {
-        actor.attemptsTo(
-                LookForInformation.about(term)
+    @When("add the product")
+    public void add_the_product(List<String> products) {
+        products.forEach(
+                productName -> theActorInTheSpotlight().attemptsTo(
+                        AddProducts.toTheShoppingCart(productName)
+                ));
+        theActorInTheSpotlight().attemptsTo(
+                goToTheShoppingCart()
         );
+
     }
 
-    @Then("{actor} should see information about {string}")
-    public void should_see_information_about(Actor actor, String term) {
-        actor.attemptsTo(
-                Ensure.that(WikipediaArticle.HEADING).hasText(term)
-        );
+    @Then("user can see the total amount")
+    public void user_can_see_the_total_amount(String total) {
+        theActorInTheSpotlight().should(seeThat("The total value:", TotalValue.shouldBe(), equalTo(total)));
+
     }
+
 }
