@@ -24,13 +24,9 @@ public class SearchStepDefinitions {
 
     @When("add the product")
     public void add_the_product(List<String> products) {
-        products.forEach(
-                productName -> theActorInTheSpotlight().attemptsTo(
-                        AddProducts.toTheShoppingCart(productName)
-                ));
-        theActorInTheSpotlight().attemptsTo(
-                goToTheShoppingCart()
-        );
+       theActorInTheSpotlight().attemptsTo(
+        AddProducts.toTheShoppingCart(products));
+        theActorInTheSpotlight().attemptsTo(AddProducts.goToTheShoppingCart());
 
     }
 
